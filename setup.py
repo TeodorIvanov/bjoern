@@ -1,6 +1,7 @@
 import os
 import glob
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
+
 
 SOURCE_FILES = [os.path.join('http-parser', 'http_parser.c')] + \
                sorted(glob.glob(os.path.join('bjoern', '*.c')))
@@ -32,5 +33,11 @@ setup(
                     'Programming Language :: Python :: 3',
                     'Topic :: Internet :: WWW/HTTP :: WSGI :: Server'],
     py_modules   = ['bjoern'],
-    ext_modules  = [bjoern_extension]
+    ext_modules  = [bjoern_extension],
+    packages=[p for p in find_packages()],
+    entry_points={
+        'console_scripts': [
+            'bjoern = bjoern.cli:run_from_cli',
+        ]
+    },
 )
